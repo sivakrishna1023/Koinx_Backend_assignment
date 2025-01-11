@@ -1,6 +1,7 @@
 import express from 'express';
 import axios from 'axios';
 import mongoose from 'mongoose';
+import cron from 'node-cron';
 
 const app = express();
 const port = 3000;
@@ -52,6 +53,17 @@ app.post('/update-coins', async (req, res) => {
     } catch (error) {
         console.error('Error fetching data from CoinGecko:', error);
         res.status(500).send('Error updating coin data');
+    }
+});
+
+// Schedule the /update-coins endpoint to be hit every two hours
+
+cron.schedule('0 */2 * * *', async () => {
+    try {
+        const response = await axios.post(`http://localhost:${port}/update-coins`);
+        console.log('Scheduled update-coins request successful:', response.data);
+    } catch (error) {
+        console.error('Scheduled update-coins request failed:', error);
     }
 });
 

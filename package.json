@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "axios": "^1.7.9",
+    "corn": "^0.0.1",
     "express": "^4.21.2",
     "mongoose": "^8.9.4"
   }
